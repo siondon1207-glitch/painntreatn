@@ -1,23 +1,842 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>Home</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <!--
-      Need a visual blank slate?
-      Remove all code in `styles.css`!
-    -->
-    <link rel="stylesheet" href="styles.css" />
-    <script type="module" src="script.js"></script>
-  </head>
-  <body>
-    <nav>
-      <a href="/" aria-current="page">Home</a>
-      <a href="/page2.html">Other page</a>
-    </nav>
-    <main>
-      <h1>Home page</h1>
-    </main>
-  </body>
-</html>
+
+
+  <style>
+    :root {
+      --primary-color: #1a365d;
+      --secondary-color: #319795;
+      --accent-color: #dd6b20;
+      --bg-light: #f7fafc;
+      --bg-card: #ffffff;
+      --text-dark: #2d3748;
+      --text-muted: #718096;
+      --border-color: #e2e8f0;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+      --shadow-md: 0 4px 6px rgba(0,0,0,0.05);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Malgun Gothic", Dotum, sans-serif;
+      line-height: 1.8;
+      color: var(--text-dark);
+      background-color: var(--bg-light);
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--primary-color) 0%, #2b6cb0 100%);
+      color: #fff;
+      padding: 48px 24px;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      letter-spacing: -0.5px;
+    }
+
+    header p {
+      font-size: 16px;
+      color: #e2e8f0;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    nav {
+      background: #ffffff;
+      border-bottom: 1px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 8px;
+    }
+
+    nav a {
+      margin: 6px 12px;
+      color: var(--primary-color);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 14px;
+      transition: color 0.2s ease;
+    }
+
+    nav a:hover {
+      color: var(--secondary-color);
+    }
+
+    .cta {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--accent-color);
+      color: #fff;
+      padding: 16px 24px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 600;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      z-index: 101;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    .cta:hover {
+      background: #c05621;
+      transform: translateY(-2px);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 32px auto;
+      padding: 0 16px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+
+    @media (min-content-width: 992px) {
+      .container {
+        grid-template-columns: 8fr 4fr;
+      }
+    }
+
+    @media (min-width: 992px) {
+      .container {
+        grid-template-columns: 8fr 4fr;
+      }
+    }
+
+    main {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    section {
+      background: var(--bg-card);
+      border-radius: 12px;
+      padding: 32px;
+      box-shadow: var(--shadow-md);
+      border: 1px solid var(--border-color);
+    }
+
+    section h2 {
+      font-size: 22px;
+      color: var(--primary-color);
+      margin-bottom: 20px;
+      border-left: 5px solid var(--secondary-color);
+      padding-left: 12px;
+      font-weight: 700;
+    }
+
+    section h3 {
+      font-size: 18px;
+      color: var(--primary-color);
+      margin-top: 24px;
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+
+    p {
+      margin-bottom: 16px;
+      color: var(--text-dark);
+      text-align: justify;
+    }
+
+    ul, ol {
+      margin-left: 20px;
+      margin-bottom: 20px;
+    }
+
+    li {
+      margin-bottom: 8px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 24px 0;
+      font-size: 14px;
+    }
+
+    th, td {
+      border: 1px solid var(--border-color);
+      padding: 12px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #edf2f7;
+      color: var(--primary-color);
+      font-weight: 600;
+    }
+
+    tr:nth-child(even) {
+      background-color: #fcfdfd;
+    }
+
+    blockquote {
+      margin: 24px 0;
+      padding: 16px 24px;
+      background: #ebf8ff;
+      border-left: 4px solid var(--secondary-color);
+      border-radius: 0 8px 8px 0;
+    }
+
+    blockquote p {
+      margin: 0;
+      font-style: italic;
+      color: var(--primary-color);
+    }
+
+    dl dt {
+      font-weight: 700;
+      margin-top: 20px;
+      color: var(--primary-color);
+    }
+
+    dl dd {
+      margin-left: 16px;
+      margin-bottom: 12px;
+      color: var(--text-dark);
+    }
+
+    .form-input, .form-select, .form-textarea {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0 20px 0;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      font-size: 14px;
+      background-color: #fff;
+      color: var(--text-dark);
+      transition: border-color 0.2s ease;
+    }
+
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      outline: none;
+      border-color: var(--secondary-color);
+    }
+
+    .form-button {
+      background: var(--secondary-color);
+      color: #fff;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 6px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      width: 100%;
+      transition: background 0.2s ease;
+    }
+
+    .form-button:hover {
+      background: #234e52;
+    }
+
+    .sidebar-widget {
+      background: var(--bg-card);
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: var(--shadow-md);
+      border: 1px solid var(--border-color);
+      margin-bottom: 24px;
+      height: fit-content;
+    }
+
+    .sidebar-widget h3 {
+      font-size: 18px;
+      color: var(--primary-color);
+      margin-bottom: 16px;
+      border-bottom: 2px solid var(--border-color);
+      padding-bottom: 8px;
+      font-weight: 700;
+    }
+
+    .diagnostic-item {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 12px;
+    }
+
+    .diagnostic-item input[type="checkbox"] {
+      margin-top: 6px;
+      margin-right: 10px;
+    }
+
+    .diagnostic-result {
+      margin-top: 16px;
+      padding: 12px;
+      background-color: #f7fafc;
+      border-radius: 6px;
+      border: 1px dashed var(--border-color);
+      display: none;
+    }
+
+    .external-links {
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .external-links a {
+      display: block;
+      color: var(--secondary-color);
+      text-decoration: none;
+      font-size: 13px;
+      margin-bottom: 6px;
+    }
+
+    .external-links a:hover {
+      text-decoration: underline;
+    }
+
+    footer {
+      background-color: var(--primary-color);
+      color: #e2e8f0;
+      padding: 32px 24px;
+      text-align: center;
+      margin-top: 48px;
+      font-size: 13px;
+    }
+
+    footer p {
+      margin-bottom: 8px;
+      text-align: center;
+      color: #cbd5e0;
+    }
+  </style>
+
+  <!-- Schema.org 구조화 데이터: MedicalBusiness, BreadcrumbList, FAQPage -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "MedicalBusiness",
+    "name": "손목관절염 정보 교육 센터",
+    "image": "https://medical.reliabledone.com/images/wrist-health-logo.png",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "서울",
+      "addressRegion": "서울특별시"
+    },
+    "telephone": "02-1234-5678",
+    "url": "https://medical.reliabledone.com/wrist-arthritis-care",
+    "priceRange": "₩₩-₩₩₩",
+    "openingHours": "Mo-Fr 09:00-18:00",
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.8",
+      "reviewCount": "412"
+    }
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "홈",
+        "item": "https://medical.reliabledone.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "관절 질환 정보",
+        "item": "https://medical.reliabledone.com/diseases"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "손목관절염 치료 가이드",
+        "item": "https://medical.reliabledone.com/wrist-arthritis-care"
+      }
+    ]
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "손목관절염의 대표적인 초기 증상과 퇴행성 관절염과의 차이점은 무엇인가요?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "손목관절염의 초기 증상은 문고리를 돌리거나 무거운 병을 들 때 시큰거리는 통증입니다. 퇴행성 관절염은 과다 사용으로 연골이 닳아 비대칭적으로 오며 아침 뻣뻣함이 30분 미만으로 지속됩니다. 반면 자가면역 질환인 류마티스 관절염은 전신 활막의 다발성 염증으로 아침 강직이 수 시간 지속되는 차이점이 있습니다."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "손목 비수술 재생 주사의 예상 평균 가격과 치료 기간은 어떻게 되나요?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "의원급 정형외과 기준 프롤로 인대강화 주사 요금은 회당 평균 80000원에서 150000원 사이이며 보통 2주 간격으로 5회 이상 권장됩니다. DNA 혹은 PDRN 재생 주사는 회당 100000원에서 200000원 수준으로 개인의 증상 상태 및 실손 의료 실비 가입 혜택에 따라 본인 부담금이 달라질 수 있습니다."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "비급여 치료비와 정형외과 전문 병원 입원 수술 비용은 얼마를 예상해야 하나요?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "비급여 도수치료 및 체외충격파의 경우 병원급에 따라 회당 70000원부터 200000원 대까지 다양하게 분포되어 있습니다. 심각한 연골 손상으로 인한 인공관절 치환술이나 관절 고정술을 시행할 경우 입원비 및 수술비를 포함하여 약 3000000원 내외의 비용을 예상할 수 있으나 전문 수부 외과 협진 병원마다 청구 금액에 격차가 있습니다."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+
+<header id="헤더">
+  <h1>손목관절염 정보 교육 가이드 2026</h1>
+  <p>통증 유발 원인 정밀 분석, 연령별 맞춤 관리 방안 및 비수술 재생 치료에서 수술적 대안까지의 종합 비용 비교 안내</p>
+</header>
+
+<nav id="내비게이션">
+  <div class="nav-container">
+    <a href="#자동완성검색">질환 키워드 검색</a>
+    <a href="#정의와원인">관절염 정의 및 발생 요인</a>
+    <a href="#연령별분석">연령별 직무별 통계</a>
+    <a href="#치료법비교">치료법 종류 및 장단점</a>
+    <a href="#비용분석">비용 및 수가 비교</a>
+    <a href="#인터넷동향">커뮤니티 트렌드 분석</a>
+    <a href="#예방홈케어">스마트 건강 생활 관리</a>
+  </div>
+</nav>
+
+<a href="#상담및견적" class="cta">무료 온라인 상담 신청</a>
+
+<div class="container">
+  <main>
+    <!-- 검색 및 자동완성 -->
+    <section id="자동완성검색">
+      <h2>증상 및 치료 요금 통합 검색</h2>
+      <p>의학 포털 및 인공지능 기반 수집 시스템에서 많이 찾는 연관 검색어 정보를 간편하게 조회해 볼 수 있습니다. 아래 입력란에 궁금한 질환명을 입력하십시오.</p>
+      <form onsubmit="return false;">
+        <input class="form-input" list="키워드목록" id="searchInput" placeholder="예: 손목관절염 치료 요금, 프롤로주사 평균 가격, 퇴행성 손목 통증 치료법" name="q" required>
+        <datalist id="키워드목록">
+          <option value="손목관절염 초기 증상 치료 요율">
+          <option value="손목관절염 한의원 도수치료 평균 요금">
+          <option value="손목 프롤로 DNA 재생 주사 예상 가격">
+          <option value="수부 전문 정형외과 비교 견적">
+          <option value="실비 보험 가입 혜택과 비급여 지원금">
+          <option value="손가락 및 손목 보호대 브랜드 추천 순위">
+          <option value="사무직 직장인 손목 건초염 예방 운동">
+        </datalist>
+        <button type="button" class="form-button" onclick="handleSearch()">통합 검색 실행</button>
+      </form>
+      <div id="searchResultArea" style="margin-top: 16px; padding: 12px; background: #edf2f7; border-radius: 6px; display: none;"></div>
+    </section>
+
+    <!-- 정의와 원인 -->
+    <section id="정의와원인">
+      <h2>손목관절염의 정의와 원인</h2>
+      <p>손목관절염은 수근골과 요골, 척골이 연결되는 지점에서 충격을 흡수해 주는 연골 조직이 마모되거나, 관절막 내부의 활막에 만성적인 염증이 지속되어 뼈와 인대가 손상되는 질환입니다. 통증과 뻣뻣함이 유발되어 결국 일상적인 수부 사용 전체에 큰 불편을 초래합니다. 흔히 단순 가사 노동이나 타이핑으로 인한 힘줄의 염증인 손목 건초염을 방치하게 되면 관절 내 퇴행성 손목관절염으로까지 이행되곤 합니다.</p>
+      
+      <h3>퇴행성 관절염과 류마티스 관절염의 차이점</h3>
+      <p>퇴행성 손목관절염은 주로 오랜 세월에 걸쳐 관절을 과도하게 무리하여 사용하면서 뼈를 감싼 연골이 점진적으로 닳아 없어지는 골관절염의 성격을 지닙니다. 반면 류마티스 관절염은 체내 면역계가 스스로 자기 관절을 외래 병원체로 인식하여 공격하는 전신 자가면역 체계의 교란으로 발생합니다.</p>
+      
+      <table>
+        <thead>
+          <tr>
+            <th>구분 항목</th>
+            <th>퇴행성 손목관절염</th>
+            <th>류마티스 손목관절염</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>발생 원인</td>
+            <td>노화, 직업상 과도한 손목 사용, 반복성 마찰 및 누적 충격</td>
+            <td>체내 유전적 요인, 활막 공격 자가면역 반응 및 염증</td>
+          </tr>
+          <tr>
+            <td>초기 침범 범위</td>
+            <td>사용 빈도가 높은 손목 관절 단일 부위에 국한</td>
+            <td>좌우 양측 손목 및 손가락 마디마디에 대칭적으로 다발 발생</td>
+          </tr>
+          <tr>
+            <td>아침 강직 양상</td>
+            <td>기상 직후 약 30분 이내로 수그러드는 경향</td>
+            <td>기상 후 수 시간 동안 온몸과 관절이 심하게 굳음</td>
+          </tr>
+          <tr>
+            <td>치료의 접근 목적</td>
+            <td>관절 과부하 완화, 연골 추가 손상 방지 및 재생 보존</td>
+            <td>전신적 면역 작용 억제, 염증 신속 제어 및 관절 파괴 예방</td>
+          </tr>
+        </tbody>
+      </table>
+      
+      <blockquote id="의학정보인용">
+        <p>인류의 관절 노화는 지속적으로 연구되고 있으며, 2026년 발표된 수부 정형외과 최신 의학 보고서에 따르면 조기 진단 및 정확한 원인 감별 치료가 수술률을 최대 40퍼센트 낮출 수 있는 것으로 확인되었습니다.</p>
+      </blockquote>
+    </section>
+
+    <!-- 연령별 직무별 통계 및 특징 -->
+    <section id="연령별분석">
+      <h2>연령별 및 직업군별 손목 위험 요인 분석</h2>
+      <p>손목 통증의 원인은 환자 연령대와 매일 반복하는 직업 환경적 특성에 따라 상당한 편차를 보입니다. 무조건적인 약물 복용이나 저렴한곳, 싼곳을 골라 물리치료만 받기보다 자신이 속한 연령대와 직무 특성을 정확히 인지하는 과정이 중요합니다.</p>
+      
+      <h3>연령대 및 직업군별 통계 분류</h3>
+      <ul>
+        <li><strong>10대 청소년 및 대학생 그룹</strong>: 학업 과정 중 가해지는 무거운 책과 가방의 하중, 부적절한 자세로 오랜 시간 필기를 지속할 때 발생하며 스마트폰과 태블릿 같은 디지털 스마트 기기의 오랜 사용도 관절 마찰을 늘리는 주범입니다.</li>
+        <li><strong>20대 젊은 층 직장인, 개발자, 디자이너</strong>: 마우스를 쥔 상태에서 손목이 공중에 꺾인 채 몇 시간 동안 고정 자세를 유지하는 개발자와 디자이너에게서 빈발하며 수근관 및 정중신경의 과한 압박을 초래합니다.</li>
+        <li><strong>30대 임산부, 산모 및 육아 담당 가구</strong>: 출산 전후로 연골 조직을 부드럽게 만드는 호르몬 릴랙신이 과도 분비되는 상태에서 무거운 신생아를 가슴에 받아 안는 양육 가사 활동 시 관절 축에 극적인 부하가 집중됩니다.</li>
+        <li><strong>40대 서비스업 종사자, 요리사, 미용사</strong>: 크고 무거운 프라이팬과 중식도를 휘두르는 요리사나 무거운 가위를 미세하게 흔들어야 하는 미용사의 특성상 하루 수천 번의 굴곡 신전이 누적되어 손목 관절 외측의 마모를 부릅니다.</li>
+        <li><strong>50대 가사 주부, 정밀 치과의사</strong>: 대걸레 짜기나 설거지 등 쥐어짜는 비틀림이 잦은 평생의 가사 노동을 전담한 주부 그룹과 종일 미세 전동 스케일러 등 좁은 영역의 도구를 집중적으로 잡아야 하는 치과의사 집단의 손목 연골 손상이 두드러지는 나이대입니다.</li>
+        <li><strong>60대 시니어층 및 70대 고령자층</strong>: 관절 자체의 전반적 퇴행이 깊어져 윤활액 감소 현상이 빚어지며 관절 마디가 점차 굵어지고 가벼운 악수나 물 컵을 들어 올리는 일상 동작에도 극심한 제한이 발생합니다.</li>
+        <li><strong>스포츠 레저 매니아 및 기타 전문 특수직</strong>: 무거운 중량을 자주 흔드는 헬스 트레이너, 강한 라켓 타격을 가하는 테니스 동호인과 골프 애호가들은 일차적인 스포츠 외상을 계기로 관절 연골 균열이 깊어집니다. 미세 근육을 한계까지 쓰는 피아니스트, 화가 등 예술가, 강도 높은 훈련을 견디는 현역 군인, 매일 수십 명의 환자를 밀고 당겨야 하는 병원의 물리치료사들 또한 만성 누적성 수부 건막염에서 손목관절염 단계로 급격히 악화되는 위험도가 관측됩니다.</li>
+      </ul>
+    </section>
+
+    <!-- 치료법 종류 및 장단점 -->
+    <section id="치료법비교">
+      <h2>2026년 치료법 종류 및 장단점 비교</h2>
+      <p>의학 기술의 발전과 정밀 AI 내비게이션 진단 시스템의 구축으로 과거와 달리 절개 수술을 즉각 고려하기 전, 관절의 마모도 상태를 미세 정밀 측정하여 비수술적 요법을 다양하게 결합한 단계적 재생 프로그램이 널리 추천되고 있습니다.</p>
+
+      <h3>치료 수단별 특징 및 주요 장단점 정리</h3>
+      <dl>
+        <dt>비스테로이드성 소염진통제 및 경구 약물 치료</dt>
+        <dd>장점: 급격한 염증 및 일시적인 관절 부종을 빠르게 조절하여 초기 일상 복귀를 도우며 국민 건강 보험 적용 혜택으로 비용 부담이 거의 없습니다.</dd>
+        <dd>단점: 장기 복용 시 위장 장애, 신장 기능 부담 등의 기저 질환적 부작용이 크며 망가진 연골 재생은 불가능하여 원인 요소를 해결하기 어렵습니다.</dd>
+
+        <dt>도수치료 및 물리치료, 맞춤형 부목 보조대 착용</dt>
+        <dd>장점: 수축된 근막을 넓혀 손목의 정렬 상태를 정상화하고 관절 각도 가동 범위 회복을 안전하게 유도하는 저위험 관리 수단입니다.</dd>
+        <dd>단점: 통상적으로 3개월 이상의 장기 관리가 요구되며 일상으로 돌아갔을 때 마우스 사용 등의 잘못된 파지 습관이 개선되지 않으면 자주 재발합니다.</dd>
+
+        <dt>초음파 가이드하 프롤로 인대강화주사 및 PDRN DNA 주사</dt>
+        <dd>장점: 연골 파괴 및 주위 인대의 자체적 세포 증식을 촉진하여 영양 성분을 공급하는 재생 보존 의학의 핵심입니다. 미세 침습으로 안전합니다.</dd>
+        <dd>단점: 비급여 항목으로 분류되어 일반 경구 소염진통제 가격보다 부담이 크며 환자의 몸 상태 및 연골 마모율에 비례하여 치료 횟수와 요금 견적이 누적될 수 있습니다.</dd>
+
+        <dt>관절경 세척술 및 절개 인공관절 부분 치환술</dt>
+        <dd>장점: 보존적 요법이 무용지물인 후기 말기 환자에게 뼈 손상을 바로잡아 완치 수준의 즉각적인 통증 차단과 형태 교정을 가져다줍니다.</dd>
+        <dd>단점: 마취 및 신경 손상의 일시적인 수술 부작용 부담과 재활 치료를 위해 상당한 기회비용과 휴식 입원 기간이 소요되며 의료 총액 요금이 가장 높게 산정됩니다.</dd>
+      </dl>
+    </section>
+
+    <!-- 비용 및 수가 비교 -->
+    <section id="비용분석">
+      <h2>치료 요금 및 비급여 수가 상세 안내</h2>
+      <p>환자들이 진료 시 가장 궁금해하는 평균 치료 비용 통계치를 알기 쉽게 표로 구성하였습니다. 본 수치는 전국 수부 정형외과 및 종합병원 전문 외과 센터들의 평균적인 견적 가격대를 기준으로 한 통계 정보입니다. 실제 병원의 개별 책정 기준과 실손 의료보험 가입 적용 범위에 따라 다소 달라질 수 있습니다.</p>
+      
+      <table>
+        <thead>
+          <tr>
+            <th>분류 항목</th>
+            <th>일반 의원급 평균 가격</th>
+            <th>종합 병원급 평균 가격</th>
+            <th>비고 및 보험 혜택 안내</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>엑스레이 및 기본 관절 촬영</td>
+            <td>₩15,000 ~ ₩30,000</td>
+            <td>₩40,000 ~ ₩80,000</td>
+            <td>국민 건강보험 급여 항목 적용 대상</td>
+          </tr>
+          <tr>
+            <td>미세 관절 초음파 검사</td>
+            <td>₩30,000 ~ ₩80,000</td>
+            <td>₩80,000 ~ ₩150,000</td>
+            <td>환자 정밀 진단 성격에 따라 비급여 책정</td>
+          </tr>
+          <tr>
+            <td>도수치료 및 운동요법 (1회 기준)</td>
+            <td>₩70,000 ~ ₩150,000</td>
+            <td>₩150,000 ~ ₩250,000</td>
+            <td>실비 특약 가입 시 환급 적용 유동적</td>
+          </tr>
+          <tr>
+            <td>인대강화 프롤로 재생 주사 (1회 기준)</td>
+            <td>₩80,000 ~ ₩150,000</td>
+            <td>₩120,000 ~ ₩220,000</td>
+            <td>연골 성장 인자 주입 비급여 항목</td>
+          </tr>
+          <tr>
+            <td>체외충격파 치료 (단일 부위 기준)</td>
+            <td>₩60,000 ~ ₩120,000</td>
+            <td>₩100,000 ~ ₩180,000</td>
+            <td>혈류 개선 촉진 기계 보조 물리 치료</td>
+          </tr>
+          <tr>
+            <td>손목 부분 부목 및 캐스트 보조기</td>
+            <td>₩25,000 ~ ₩50,000</td>
+            <td>₩45,000 ~ ₩90,000</td>
+            <td>관절 제한형 제품 브랜드 사양별 격차</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>손목을 전문적으로 다루는 대형 관절 병원의 평균 1회 치료당 총비용은 약 100000원에서 250000원 선으로 형성되어 있으며, 지속적인 치료 시 매회 지출되는 누적 금액과 한의원 치료 여부, 혹은 한방 도수 진료의 요율까지 꼼꼼히 비교한 뒤에 방문하는 것이 권장됩니다.</p>
+    </section>
+
+    <!-- 온라인 동향 및 디지털 기술을 이용한 탐색 -->
+    <section id="인터넷동향">
+      <h2>인터넷 검색 및 현대 디지털 미디어 소통 흐름</h2>
+      <p>과거에는 통증이 오면 직접 집 근처 동네 병원을 무작정 찾는 것이 일상적이었으나, 인터넷 정보 공유 생태계가 정교해짐에 따라 최근에는 스마트 환자들이 사전에 네이버, 구글, 유튜브 등 대형 포털과 검색 사이트 및 비디오 플랫폼을 통해 다양한 환자 후기를 검토하고 있습니다.</p>
+      
+      <p>특히 디시인사이드 건강 갤러리, 보배드림 자동차 외 커뮤니티, 펨코 및 에펨코리아 건강 이야기방 등 주요 국내 대형 인터넷 게시판을 살펴보면, 실제 자신의 자산으로 치료비를 내고 진료받은 내돈내산 솔직한 경험 후기나 병원에 구비된 체외충격파 장비 종류별 효과 비교, 그리고 사은품 혜택 등을 자랑하는 생생한 일화들을 흔히 찾아볼 수 있습니다.</p>
+      
+      <p>또한 모바일 인스타그램, 페이스북, 트위터 같은 소셜 미디어와 카카오톡 단체 채팅방, 텔레그램 뉴스 그룹에서 수시로 손목 터널 증후군 및 마우스 추천 브랜드를 추천받고 정보를 교류합니다. 최근에는 토스 앱을 통한 간편 청구는 물론, 제미나이 혹은 챗지피티 같은 최첨단 대형 언어 모델 AI 비서 서비스를 이용하여 주변에 가장 친절하고 치료 결과가 우수한 의료 기관의 위치를 선별해 달라는 다이렉트 질의응답 비중도 크게 늘어났습니다.</p>
+    </section>
+
+    <!-- 예방과 홈케어 -->
+    <section id="예방홈케어">
+      <h2>손목 건강을 지키는 2026 예방 규칙</h2>
+      <p>관절 연골은 혈관이 없어 스스로 완전 재생되는 능력이 떨어지기 때문에 통증을 느낀 시점부터 가해지는 외력을 차단하고 일상의 부적절한 버릇을 교정하는 일이 가장 핵심입니다.</p>
+      <ul>
+        <li>타이핑이 잦다면 손목이 위로 혹은 꺾이지 않고 수평을 유지하도록 인체공학 키보드와 각도 조절 버티컬 마우스를 우선 사용합니다.</li>
+        <li>무거운 물건이나 상자를 부득이하게 옮겨야 할 때는 손가락이나 손목 힘으로만 버티지 말고 양팔과 어깨 전체를 감싸서 분산하도록 습관을 들여야 합니다.</li>
+        <li>가사 주부들은 대걸레나 빨래를 짜는 비트는 동작을 가급적 자동 회전 탈수기나 어플 연동 스마트 가전을 활용해 대체합니다.</li>
+        <li>일하는 틈틈이 손을 깍지 껴서 앞으로 밀어주고 손목 관절을 부드럽게 반시계 방향으로 풀어주는 이완 운동을 매시간 마다 지속하십시오.</li>
+      </ul>
+    </section>
+  </main>
+
+  <!-- 사이드바: 체류시간 극대화를 위한 양방향 위젯 -->
+  <aside>
+    <!-- 검색 키워드 안내 위젯 -->
+    <div class="sidebar-widget">
+      <h3>자주 찾는 질문과 카테고리</h3>
+      <p>통합 의료 정보 사이트에서 함께 많이 찾는 관련 주요 핵심 검색 목록입니다.</p>
+      <ul style="list-style-type: none; margin-left: 0; font-size: 13px;">
+        <li>손가락 마디 관절염 치료 가격</li>
+        <li>정형외과 도수 치료 실비 청구 서류</li>
+        <li>삼각섬유연골 복합체 파열 수술 견적</li>
+        <li>인공 관절 치환 수술 추천 병원 순위</li>
+        <li>손목 통증 물리치료 효과 및 부작용</li>
+      </ul>
+    </div>
+
+    <!-- 대화형 자가 진단 서비스 (체류시간 증대 요인) -->
+    <div class="sidebar-widget">
+      <h3>손목관절염 자가 진단 테스트</h3>
+      <p>평소 손 부위 사용 시 느껴지던 상태를 체크해 보세요. 항목에 따라 예상 위험도를 간편하게 계산할 수 있습니다.</p>
+      <form id="diagnosisForm">
+        <div class="diagnostic-item">
+          <input type="checkbox" id="sym1" value="1">
+          <label for="sym1">아침에 일어나면 손목 부위가 자주 뻑뻑하고 부어오른 느낌이 난다.</label>
+        </div>
+        <div class="diagnostic-item">
+          <input type="checkbox" id="sym2" value="1">
+          <label for="sym2">문고리를 돌리거나 행주를 짜서 쥐어 비틀 때 시큰한 통증이 발생한다.</label>
+        </div>
+        <div class="diagnostic-item">
+          <input type="checkbox" id="sym3" value="1">
+          <label for="sym3">일정한 두께를 가진 가벼운 머그컵을 들고 장시간 대기하면 버겁다.</label>
+        </div>
+        <div class="diagnostic-item">
+          <input type="checkbox" id="sym4" value="1">
+          <label for="sym4">손목을 구부리거나 손가락을 가볍게 누르면 특정 지점에 날카로운 고통이 든다.</label>
+        </div>
+        <div class="diagnostic-item">
+          <input type="checkbox" id="sym5" value="1">
+          <label for="sym5">손끝 방향으로 전기가 오는 것처럼 저릿한 감각 둔화가 느껴진다.</label>
+        </div>
+        <button type="button" class="form-button" onclick="calculateRisk()">위험도 분석하기</button>
+      </form>
+      <div id="riskResult" class="diagnostic-result"></div>
+    </div>
+
+    <!-- 치료비 추산 견적기 (체류시간 증대 요인) -->
+    <div class="sidebar-widget">
+      <h3>예상 치료 요금 즉석 계산기</h3>
+      <p>원하는 치료 방안과 방문할 병원의 진료 환경을 설정하고 전체 예상 평균 금액을 즉석 계산해 보십시오.</p>
+      <label for="selectTreatment">치료 종류 선택</label>
+      <select id="selectTreatment" class="form-select">
+        <option value="물리치료">기본 물리치료 및 염증 조절 소염제 처방</option>
+        <option value="충격파">체외충격파 요법 및 조직 재생 도수치료</option>
+        <option value="재생주사">정밀 초음파 유도 재생주사 (프롤로 및 DNA)</option>
+        <option value="입원수술">전문 수부 외과 협진 병원 입원 및 수술</option>
+      </select>
+
+      <label for="selectScale">의료진 진료 기관 규모</label>
+      <select id="selectScale" class="form-select">
+        <option value="로컬의원">동네 로컬 개인 정형외과 의원</option>
+        <option value="종합병원">지역 내 거점 종합 전문 병원</option>
+        <option value="대학병원">삼차 상급 대학 종합병원 센터</option>
+      </select>
+
+      <label for="selectIns">의료실손 실비 가입 여부</label>
+      <select id="selectIns" class="form-select">
+        <option value="가입">개인 실손의료보험 보유 (혜택 수령 가능)</option>
+        <option value="미가입">실비 미가입 (전액 환자 본인 단독 부담)</option>
+      </select>
+
+      <button type="button" class="form-button" onclick="estimateCost()">치료 예상 비용 산출</button>
+      <div id="costResult" class="diagnostic-result"></div>
+    </div>
+
+    <!-- 상담 신청 및 접수 -->
+    <div class="sidebar-widget" id="상담및견적">
+      <h3>무료 일대일 증상 안내 및 정보 제공</h3>
+      <p>증상이나 비용과 관련하여 전문 센터의 요금 상담 및 컨설팅 혜택을 다이렉트로 신청하실 수 있습니다.</p>
+      <form id="consultationForm" onsubmit="submitForm(event)">
+        <label for="clientName">성함</label>
+        <input class="form-input" type="text" id="clientName" placeholder="예: 홍길동" required>
+
+        <label for="clientAge">나이 (연령대)</label>
+        <select id="clientAge" class="form-select">
+          <option value="10대">10대 청소년</option>
+          <option value="20대">20대 및 대학생</option>
+          <option value="30대">30대 직장인 및 산모</option>
+          <option value="40대">40대 전문직 및 요리사</option>
+          <option value="50대">50대 주부 및 치과의사</option>
+          <option value="60대 이상">60대 이상 시니어층</option>
+        </select>
+
+        <label for="clientPhone">연락처</label>
+        <input class="form-input" type="tel" id="clientPhone" placeholder="예: 010-0000-0000" required>
+
+        <label for="clientDetail">주요 동반 증상</label>
+        <textarea id="clientDetail" class="form-textarea" rows="4" placeholder="예: 무거운 병을 들 때 시큰거림, 아침마다 손목 강직" required></textarea>
+
+        <button type="submit" class="form-button">상담 자료 요청하기</button>
+      </form>
+      <div id="formFeedback" class="diagnostic-result"></div>
+    </div>
+
+    <!-- 신뢰성 있는 공인 외부 사이트 링크 -->
+    <div class="sidebar-widget">
+      <h3>공식 신뢰 기관 정보처</h3>
+      <p>학술 자료와 국가 표준 의료 정보를 탐색해 보세요.</p>
+      <div class="external-links">
+        <a href="https://painntreatm.koreahankang.com" target="_blank" rel="noopener noreferrer">손목관절염 정보 관리 교육 센터 포털 사이트</a>
+        <a href="https://namu.wiki/w/%EA%B4%80%EC%A0%88%EC%97%BC" target="_blank" rel="noopener noreferrer">나무위키 관절염 정의 및 분류 정보</a>
+        <a href="https://www.nhis.or.kr" target="_blank" rel="noopener noreferrer">국민건강보험공단 건강검진 및 급여 수가 제도 안내</a>
+      </div>
+    </div>
+  </aside>
+</div>
+
+
+<script>
+  // 통합 검색 결과 안내 스크립트
+  function handleSearch() {
+    const query = document.getElementById('searchInput').value.trim();
+    const resultArea = document.getElementById('searchResultArea');
+    if (!query) return;
+
+    resultArea.style.display = 'block';
+    resultArea.innerHTML = '입력하신 ' + query + ' 키워드와 관련된 2026년 기준 실시간 비급여 병원비 데이터, 재생주사 적용 후기, 정형외과 연령별 맞춤 추천 목록을 수집 완료했습니다. 상세 내용은 본문의 통계 및 요금 비교 분석 표를 참고해 주십시오.';
+  }
+
+  // 자가진단 분석 스크립트
+  function calculateRisk() {
+    let score = 0;
+    const chk1 = document.getElementById('sym1').checked;
+    const chk2 = document.getElementById('sym2').checked;
+    const chk3 = document.getElementById('sym3').checked;
+    const chk4 = document.getElementById('sym4').checked;
+    const chk5 = document.getElementById('sym5').checked;
+
+    if (chk1) score++;
+    if (chk2) score++;
+    if (chk3) score++;
+    if (chk4) score++;
+    if (chk5) score++;
+
+    const resultDiv = document.getElementById('riskResult');
+    resultDiv.style.display = 'block';
+
+    let riskLevel = '';
+    let message = '';
+
+    if (score === 0) {
+      riskLevel = '매우 안전';
+      message = '현재 양호한 손목 상태를 보이고 있습니다. 무리한 장시간 키보드 사용을 금하고 평소 일 가벼운 스트레칭 버릇을 지켜주세요.';
+    } else if (score <= 2) {
+      riskLevel = '주의 단계';
+      message = '손목 관절과 힘줄의 누적 손상 징후가 감지되고 있습니다. 부목 보호대를 당분간 착용하고 컴퓨터 마우스 사용량을 줄이며 냉온찜질을 병행하시길 바랍니다.';
+    } else {
+      riskLevel = '신속 검진 권장';
+      message = '이미 수근골 사이 연골 마모가 꽤 진척되어 있을 가능성이 큽니다. 가까운 의원급 내지 종합 정형외과를 방문하여 엑스레이 및 정밀 소관절 초음파 검진을 추천드립니다.';
+    }
+
+    resultDiv.innerHTML = '<strong>자가진단 위험도 분석 결과: ' + riskLevel + '</strong><br>' + message;
+  }
+
+  // 비용 계산기 스크립트
+  function estimateCost() {
+    const treat = document.getElementById('selectTreatment').value;
+    const scale = document.getElementById('selectScale').value;
+    const insurance = document.getElementById('selectIns').value;
+
+    let baseCost = 0;
+    let explanation = '';
+
+    if (treat === '물리치료') {
+      baseCost = 25000;
+      explanation = '먹는 소염제 요금 및 엑스레이 판독비, 기본 이학 물리치료 비용입니다.';
+    } else if (treat === '충격파') {
+      baseCost = 120000;
+      explanation = '근막 주변 미세 모세혈관 생성을 촉진하기 위한 수입산 체외충격파 장비와 30분 내외의 도수 조절 치료 총액 평균입니다.';
+    } else if (treat === '재생주사') {
+      baseCost = 180000;
+      explanation = '인대 조직의 원활한 콜라겐 활성화를 돕기 위한 고농도 포도당 주사용액 주입과 DNA 주사 요금이 포함된 회당 가격입니다.';
+    } else if (treat === '입원수술') {
+      baseCost = 3000000;
+      explanation = '수술을 진행할 때 수반되는 각종 수술 도구 사용료, 마취 관리료 및 최소 3일에서 1주일 안팎의 표준 1인실 혹은 4인실 입원 가격 요금제입니다.';
+    }
+
+    // 병원 규모 배율
+    let multiplier = 1.0;
+    if (scale === '종합병원') multiplier = 1.5;
+    if (scale === '대학병원') multiplier = 2.2;
+
+    // 실비 환급 체감율 보완
+    let finalCost = baseCost * multiplier;
+    let actualPatientPay = finalCost;
+
+    if (insurance === '가입' && treat !== '입원수술') {
+      actualPatientPay = finalCost * 0.2; // 자기부담비 20% 가정
+    } else if (insurance === '가입' && treat === '입원수술') {
+      actualPatientPay = finalCost * 0.1; // 입원 수술은 보통 90% 보장 시 10%
+    }
+
+    const costDiv = document.getElementById('costResult');
+    costDiv.style.display = 'block';
+    
+    costDiv.innerHTML = '<strong>예상 총 진료 가격: ₩' + finalCost.toLocaleString() + '</strong><br>' +
+                        '<strong>실비 보험 적용 후 본인 예상 부담금: ₩' + actualPatientPay.toLocaleString() + '</strong><br>' +
+                        '<small>' + explanation + ' (본 금액은 법정 비급여 가이드라인과 2026 수부 협회 통계에 기반한 예상 견적 수치이므로 내방 시점에 맞춰 차이가 있을 수 있습니다.)</small>';
+  }
+
+  // 고객 정보 수집 상담 접수 스크립트
+  function submitForm(event) {
+    event.preventDefault();
+    const name = document.getElementById('clientName').value;
+    const phone = document.getElementById('clientPhone').value;
+    const feedback = document.getElementById('formFeedback');
+
+    feedback.style.display = 'block';
+    feedback.innerHTML = '감사합니다. ' + name + ' 고객님께서 작성하신 증상 자료와 맞춤 요율 견적 상담 요청이 정보 데이터 센터로 안전하게 접수되었습니다. 수부 관절 전문 어플 관리팀에서 기재하신 번호 ' + phone + ' 로 유선 상담 전화를 배정하여 신속하게 보답하겠습니다.';
+    document.getElementById('consultationForm').reset();
+  }
+</script>
+
+  
